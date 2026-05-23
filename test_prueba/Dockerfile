@@ -1,8 +1,14 @@
 FROM debian
-
+#creo primera imagen
 #CMD ["echo", "Hola desde mi primera imagen Docker"]
 
-RUN apt update
-RUN apt install -y curl
+#instalo un programa curl
+#RUN apt update
+#RUN apt install -y curl
 
-CMD ["curl", "--version"]
+#CMD ["curl", "--version"]
+
+#aprendo a copiar desde un archivo a la imagen
+COPY mensaje.txt /mensaje.txt
+
+CMD ["cat", "/mensaje.txt"]
