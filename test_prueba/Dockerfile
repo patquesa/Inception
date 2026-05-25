@@ -24,11 +24,24 @@
 #CMD ["cat", "mensaje.txt"]
 #CMD ["pwd"]
 
-FROM debian
+#FROM debian
+#RUN apt update
+#RUN apt install -y nginx
 
-RUN apt update
-RUN apt install -y nginx
+#EXPOSE 80
 
-EXPOSE 80
+#CMD ["nginx", "-g", "daemon off;"]
 
-CMD ["nginx", "-g", "daemon off;"]
+#FROM debian:bullseye
+
+#RUN apt update && apt install -y mariadb-server
+
+#CMD ["mysqld"]
+
+FROM debian:bullseye
+
+RUN apt update && apt install -y mariadb-server
+
+COPY setup.sh /setup.sh
+
+CMD ["/setup.sh"]
