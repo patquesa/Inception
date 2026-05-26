@@ -9,11 +9,13 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --datadir=/var/lib/mysql
 fi
 
-#Arrancar MariaDB en background
+# ARRANCAR MariaDB temporalmente (IMPORTANTE)
 mysqld_safe &
 
 #esperar a que arranque
-sleep 5
+until mariadb-admin ping -h localhost --silent; do
+    sleep 1
+done
 
 #crear base de datos y usuario (AUTOMATICO)
 mariadb -e "CREATE DATABASE IF NOT EXISTS wordpress;"
