@@ -5,7 +5,21 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 
 #Inicializar la base de datos(si no existe)
-mysql_install_db --user=mysql --datadir=/var/lib/mysql
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
+fi
+
+#Arrancar MariaDB en background
+mysqld_safe &
+
+#esperar a que arranque
+sleep 5
+
+#crear base de datos y usuario (AUTOMATICO)
+mariadb -e "CREATE DATABASE IF NOT EXISTS wordpress;"
+mariadb -e "CREATE USER IF NOT EXISTS 'wp_user'@'%' IDENTIFIED BY '1234';"
+mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'%';"
+mariadb -e "FLUSH PRIVILEGES;"
 
 #Arrancar MariaDB en foreground
 exec mysqld
