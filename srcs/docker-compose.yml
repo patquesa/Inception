@@ -2,3 +2,7 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
+  
+  wordpress:
+    build: requirements/wordpress
+    container_name: wordpress
