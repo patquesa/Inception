@@ -19,13 +19,14 @@ until mariadb-admin ping -h localhost --silent; do
 done
 
 #crear base de datos y usuario (AUTOMATICO)
-mariadb -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-mariadb -e "CREATE USER IF NOT EXISTS 'wp_user'@'%' IDENTIFIED BY '1234';"
-mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'%';"
+mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+mariadb -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mariadb -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';"
+mariadb -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
 mariadb -e "FLUSH PRIVILEGES;"
 
 kill -TERM "$pid"
 wait "$pid" 2>/dev/null
 
 #Arrancar MariaDB en foreground
-exec mysqld
+exec mysqld --user=mysql --datadir=/var/lib/mysql
