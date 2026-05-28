@@ -6,7 +6,7 @@ RUN apt update && apt install -y \
     php-mysql \
     curl \
     wget \
-    tar
+    tar \
 	mariadb-client
 
 COPY tools/setup.sh /setup.sh
