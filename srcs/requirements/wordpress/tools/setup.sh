@@ -34,5 +34,8 @@ done
 #permisos
 chown -R www-data:www-data /var/www/html
 
+# cambiar configuración php-fpm
+sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 0.0.0.0:9000|' /etc/php/7.4/fpm/pool.d/www.conf
+
 #arrancar php-fpm
 exec php-fpm7.4 -F
