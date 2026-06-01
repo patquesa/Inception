@@ -30,4 +30,4 @@ wait "$pid" 2>/dev/null
 
 #Arrancar MariaDB en foreground
 # exec mysqld --user=mysql --datadir=/var/lib/mysql
-exec mysqld --user=mysql --bind-address=0.0.0.0
+exec mysqld --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0
