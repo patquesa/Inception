@@ -4,7 +4,7 @@
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 
-#Inicializar la base de datos(si no existe)
+#Inicializa mariadb
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --datadir=/var/lib/mysql
 fi
@@ -32,7 +32,7 @@ if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
 	FLUSH PRIVILEGES;
 EOF
 
-kill -TERM "$pid"
+kill -TERM "$pid" # apaga el MariaDB temporal que arranque antes
 wait "$pid" 2>/dev/null
 
 echo "¡Configuración inicial completada!"
@@ -41,5 +41,4 @@ else
 fi
 
 #Arrancar MariaDB en foreground
-# exec mysqld --user=mysql --datadir=/var/lib/mysql
 exec mysqld --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0
