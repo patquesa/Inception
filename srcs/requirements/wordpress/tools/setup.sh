@@ -35,6 +35,7 @@ done
 
 # Ejecutar instalación interna y crear el administrador
 cd /var/www/html
+# Comprobamos si WordPress ya está instalado para no repetir este proceso si reinicias el contenedor
 if ! wp core is-installed --allow-root; then
     wp core install \
         --url="${DOMAIN_NAME}" \
