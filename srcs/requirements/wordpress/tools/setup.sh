@@ -6,19 +6,19 @@ mkdir -p /run/php
 # crear directorio web
 mkdir -p /var/www/html
 
-# descargar WP-CLI (si no lo pusiste en el Dockerfile, lo instalamos aquí)
+# descargar WP-CLI 
 if [ ! -f /usr/local/bin/wp ]; then
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x wp-cli.phar
     mv wp-cli.phar /usr/local/bin/wp
 fi
 
-# 3. Descargar archivos de la web y configurar conexión a la BD
+# Descargar WordPress y crear el archivo wp-config.php
 if [ ! -f /var/www/html/wp-config.php ]; then
     cd /var/www/html
     
-    wp core download --allow-root
-
+    wp core download --allow-root # Descarga los archivos limpios de WordPress
+# Crea el archivo wp-config.php usando tus variables del .env
     wp config create \
         --dbname="${MYSQL_DATABASE}" \
         --dbuser="${MYSQL_USER}" \
@@ -33,7 +33,7 @@ until mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELE
     sleep 2
 done
 
-# Ejecutar instalación interna y crear los dos usuarios del .env
+# Ejecutar instalación interna y crear el administrador
 cd /var/www/html
 if ! wp core is-installed --allow-root; then
     wp core install \
@@ -43,7 +43,7 @@ if ! wp core is-installed --allow-root; then
         --admin_password="${WP_ADMIN_PASSWORD}" \
         --admin_email="${WP_ADMIN_EMAIL}" \
         --allow-root
-
+# crea el segundo usuario
     wp user create \
         "${WP_USER}" "${WP_USER_EMAIL}" \
         --user_pass="${WP_USER_PASSWORD}" \
@@ -57,5 +57,5 @@ chown -R www-data:www-data /var/www/html
 # cambiar configuración php-fpm
 sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 0.0.0.0:9000|' /etc/php/7.4/fpm/pool.d/www.conf
 
-#arrancar php-fpm
+#arrancar php-fpm en primer plano
 exec php-fpm7.4 -F
