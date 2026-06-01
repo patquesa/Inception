@@ -18,7 +18,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     cd /var/www/html
     
     wp core download --allow-root # Descarga los archivos limpios de WordPress
-# Crea el archivo wp-config.php usando tus variables del .env
+# Crea el archivo wp-config.php para que wordpress se pueda conectar a mariadb (le pasa los datos de mariadb)
     wp config create \
         --dbname="${MYSQL_DATABASE}" \
         --dbuser="${MYSQL_USER}" \
