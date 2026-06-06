@@ -6,11 +6,11 @@ all:
 down:
 	docker compose -f srcs/docker-compose.yml down
 
+
 clean:
 	docker compose -f srcs/docker-compose.yml down -v
-	sudo rm -rf /home/patquesa/data/mariadb/*
-	sudo rm -rf /home/patquesa/data/wordpress/*
+	sudo rm -rf /home/patquesa/data # borra la carpeta entera para una limpieza
 
-re: down all
+re: clean all
 
-.PHONY: all down re
+.PHONY: all down clean re
