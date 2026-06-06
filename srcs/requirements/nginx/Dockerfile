@@ -19,7 +19,7 @@ RUN mkdir -p /etc/nginx/ssl && \
     -subj "/C=ES/ST=Andalucia/L=Malaga/O=42/OU=42Malaga/CN=patquesa.42.fr"
 
 # Copiamos TU archivo de configuración al sitio correcto dentro del contenedor
-COPY ./config/nginx.conf /etc/nginx/sites-available/default
+COPY ./conf/nginx.conf /etc/nginx/sites-available/default
 
 # Creamos un enlace simbólico para activar la configuración
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
