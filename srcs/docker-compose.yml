@@ -8,6 +8,7 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
+    restart: always
 
   wordpress:
     build: requirements/wordpress
@@ -15,11 +16,26 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress_data:/var/www/wordpress
+      - wordpress_data:/var/www/html
     depends_on:
       - mariadb
     networks:
       - inception
+    restart: always
+
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443" # Abre el puerto seguro al mundo exterior
+    volumes:
+      - wordpress_data:/var/www/html # 🌟 ¡Crucial! Comparte la misma carpeta que WordPress para poder leer el index.php y las fotos
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    restart: always
+    restart: always
 
 networks:
   inception:

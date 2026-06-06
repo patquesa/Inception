@@ -13,6 +13,12 @@ if [ ! -f /usr/local/bin/wp ]; then
     mv wp-cli.phar /usr/local/bin/wp
 fi
 
+# esperar MariaDB
+until mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" 2>/dev/null; do
+    echo "Waiting for MariaDB..."
+    sleep 2
+done
+
 # Descargar WordPress y crear el archivo wp-config.php
 if [ ! -f /var/www/html/wp-config.php ]; then
     cd /var/www/html
@@ -26,12 +32,6 @@ if [ ! -f /var/www/html/wp-config.php ]; then
         --dbhost="${MYSQL_HOST}" \
         --allow-root
 fi
-
-# esperar MariaDB
-until mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" 2>/dev/null; do
-    echo "Waiting for MariaDB..."
-    sleep 2
-done
 
 # Ejecutar instalación interna y crear el administrador
 cd /var/www/html
