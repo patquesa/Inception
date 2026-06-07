@@ -4,6 +4,9 @@ services:
     container_name: mariadb
     env_file:
       - .env
+    secrets:
+      - db_root_password
+      - db_password
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
@@ -17,6 +20,10 @@ services:
       - .env
     volumes:
       - wordpress_data:/var/www/html
+    secrets:
+      - db_password
+      - wp_admin_password
+      - wp_user_password
     depends_on:
       - mariadb
     networks:
@@ -54,3 +61,14 @@ volumes:
         type: none
         o: bind
         device: /home/patquesa/data/wordpress
+
+# Vinculamos los nombres con las rutas de tus 4 archivos reales
+secrets:
+  db_root_password:
+    file: ./secrets/db_root_password.txt
+  db_password:
+    file: ./secrets/db_password.txt
+  wp_admin_password:
+    file: ./secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ./secrets/wp_user_password.txt

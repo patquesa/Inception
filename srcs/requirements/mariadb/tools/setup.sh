@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Extraemos el contenido de los secretos y los guardamos en variables locales
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+MYSQL_PASSWORD=$(cat /run/secrets/db_password)
+
 #Crear carpeta necesaria para MariaDB
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
@@ -24,7 +28,7 @@ if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
 	done
 
 	# crear base de datos y usuario (Usando Heredoc para evitar cortes de conexión)
-		mariadb << EOF
+	mariadb << EOF
 	CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 	CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 	GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
@@ -35,7 +39,7 @@ EOF
 kill -TERM "$pid" # apaga el MariaDB temporal que arranque antes
 wait "$pid" 2>/dev/null
 
-echo "¡Configuración inicial completada!"
+	echo "¡Configuración inicial completada!"
 else
     echo "La base de datos ya existe en el volumen. Saltando configuración."
 fi
