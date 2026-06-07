@@ -19,10 +19,20 @@ if [ ! -f /usr/local/bin/wp ]; then
 fi
 
 # esperar MariaDB
-until mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" 2>/dev/null; do
-    echo "Waiting for MariaDB..."
-    sleep 2
+#until mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" 2>/dev/null; do
+    #echo "Waiting for MariaDB..."
+    #sleep 2
+#done
+
+# Cambia la línea del "until" por esto para ver qué está pasando
+echo "Intentando conectar a MariaDB en host: ${MYSQL_HOST} con usuario: ${MYSQL_USER}"
+
+# Eliminamos el ping y probamos conexión directa con el cliente
+until mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "quit"; do
+    echo "Esperando a MariaDB... (el servidor aún no acepta las credenciales)"
+    sleep 3
 done
+echo "¡Conexión establecida correctamente!"
 
 # Descargar WordPress y crear el archivo wp-config.php
 if [ ! -f /var/www/html/wp-config.php ]; then
@@ -43,8 +53,7 @@ cd /var/www/html
 # Comprobamos si WordPress ya está instalado para no repetir este proceso si reinicias el contenedor
 if ! wp core is-installed --allow-root; then
     wp core install \
-        --url="${DOMAIN_NAME}" \
-		#--url="https://${DOMAIN_NAME}" COMPROBAR
+		--url="https://${DOMAIN_NAME}" \
         --title="${WP_TITLE}" \
         --admin_user="${WP_ADMIN_USER}" \
         --admin_password="${WP_ADMIN_PASSWORD}" \

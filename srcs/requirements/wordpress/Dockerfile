@@ -13,6 +13,8 @@ RUN apt update && apt install -y \
 #Creamos la carpeta para que php-fpm pueda arrancar
 RUN mkdir -p /run/php
 
+WORKDIR /var/www/html
+
 COPY tools/setup.sh /setup.sh
 RUN chmod +x /setup.sh
 
