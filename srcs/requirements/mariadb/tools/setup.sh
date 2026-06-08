@@ -30,7 +30,6 @@ if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
     done
 
 	# crear base de datos y usuario (Usando Heredoc para evitar cortes de conexión)
-	#mariadb --socket=/run/mysqld/mysqld.sock << EOF
 	mariadb --protocol=SOCKET --socket=/run/mysqld/mysqld.sock << EOF
 	CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 	CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
