@@ -25,7 +25,6 @@ if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
 	pid="$!"
 
 	# Esperar a que arranque usando el protocolo de socket local (inmune a bloqueos de IP/Host)
-    #until mariadb-admin ping --socket=/run/mysqld/mysqld.sock --silent; do
 	until mariadb-admin --protocol=SOCKET --socket=/run/mysqld/mysqld.sock ping --silent; do
         sleep 1
     done
