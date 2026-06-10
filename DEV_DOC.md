@@ -314,9 +314,19 @@ User
 
 # References
 
+## Official Documentation
+
 * Docker Documentation
 * Docker Compose Documentation
 * Nginx Documentation
 * PHP-FPM Documentation
 * MariaDB Documentation
 * WordPress Documentation
+
+## Learning Resources
+
+* HolaMundo – *Aprende Docker ahora! Curso completo gratis desde cero!*
+  https://www.youtube.com/watch?v=4Dko5W96WHg
+
+* 42Fran-byte – *Inception 42*
+  https://www.youtube.com/watch?v=VfTQTgJo_fE
