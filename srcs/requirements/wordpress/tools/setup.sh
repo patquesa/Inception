@@ -1,40 +1,40 @@
 #!/bin/bash
 
-# Extraemos el contenido de los secretos y los guardamos en variables locales
+# We extract the contents of the secrets and store them in local variables
 MYSQL_PASSWORD=$(cat /run/secrets/db_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
-# carpeta necesaria para php-fpm
+# folder required for php-fpm
 mkdir -p /run/php
 
-# crear directorio web
+# create web directory
 mkdir -p /var/www/html
 
-# descargar WP-CLI 
+# download WP-CLI 
 if [ ! -f /usr/local/bin/wp ]; then
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x wp-cli.phar
     mv wp-cli.phar /usr/local/bin/wp
 fi
 
-# Vemos qué está pasando
+# Let's see what's happening
 echo "Intentando conectar a MariaDB en host: ${MYSQL_HOST} con usuario: ${MYSQL_USER}"
 
-# Eliminamos el ping y probamos conexión directa con el cliente
+# We tested a direct connection with the client
 until mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "quit"; do
     echo "Esperando a MariaDB... (el servidor aún no acepta las credenciales)"
     sleep 3
 done
 echo "¡Conexión establecida correctamente!"
 
-# Descargar WordPress y crear el archivo wp-config.php
+# Download WordPress and create the wp-config.php file
 if [ ! -f /var/www/html/wp-config.php ]; then
     cd /var/www/html
     
-    # Descarga los archivos limpios de WordPress
+    # Download the essential WordPress files
     wp core download --allow-root 
-    # Crea el archivo wp-config.php para que wordpress se pueda conectar a mariadb (le pasa los datos de mariadb)
+    # Create the wp-config.php file so that WordPress can connect to MariaDB (it passes the MariaDB data)
     wp config create \
         --dbname="${MYSQL_DATABASE}" \
         --dbuser="${MYSQL_USER}" \
@@ -43,9 +43,9 @@ if [ ! -f /var/www/html/wp-config.php ]; then
         --allow-root
 fi
 
-# Ejecutar instalación interna y crear el administrador
+# Run internal installation and create the administrator
 cd /var/www/html
-# Comprobamos si WordPress ya está instalado para no repetir este proceso si reinicias el contenedor
+# CWe check if WordPress is already installed so we don't repeat this process if you restart the container.
 if ! wp core is-installed --allow-root; then
     wp core install \
 		--url="https://${DOMAIN_NAME}" \
@@ -54,7 +54,7 @@ if ! wp core is-installed --allow-root; then
         --admin_password="${WP_ADMIN_PASSWORD}" \
         --admin_email="${WP_ADMIN_EMAIL}" \
         --allow-root
-# crea el segundo usuario
+# create the second user
     wp user create \
         "${WP_USER}" "${WP_USER_EMAIL}" \
         --user_pass="${WP_USER_PASSWORD}" \
@@ -62,11 +62,11 @@ if ! wp core is-installed --allow-root; then
         --allow-root
 fi
 
-#permisos
+# permissions
 chown -R www-data:www-data /var/www/html
 
-# cambiar configuración php-fpm
+# change php-fpm configuration
 sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 0.0.0.0:9000|' /etc/php/7.4/fpm/pool.d/www.conf
 
-#arrancar php-fpm en primer plano
+# Start php-fpm in the foreground
 exec php-fpm7.4 -F
