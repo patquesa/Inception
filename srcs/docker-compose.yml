@@ -62,7 +62,7 @@ volumes:
         o: bind
         device: /home/patquesa/data/wordpress
 
-# Vinculamos los nombres con las rutas de tus 4 archivos reales
+# We linked the names to the paths of your 4 actual files
 secrets:
   db_root_password:
     file: ./secrets/db_root_password.txt

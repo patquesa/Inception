@@ -10,7 +10,7 @@ RUN apt update && apt install -y \
 	mariadb-client \
     && rm -rf /var/lib/apt/lists/*
 
-#Creamos la carpeta para que php-fpm pueda arrancar
+# We created the folder so that php-fpm could start.
 RUN mkdir -p /run/php
 
 WORKDIR /var/www/html
