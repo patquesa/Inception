@@ -1,27 +1,27 @@
-# Usamos Debian Bullseye como sistema operativo base
+# We use Debian Bullseye as our base operating system.
 FROM debian:bullseye
 
-# Actualizamos el sistema e instalamos Nginx
+# We updated the system and installed Nginx
 RUN apt-get update && apt-get install -y \
 	nginx \
 	openssl 
 
-# Borramos la configuración por defecto que trae Nginx para que no choque con la nuestra
+# We deleted the default configuration that comes with Nginx so that it doesn't conflict with ours.
 RUN rm -rf /etc/nginx/sites-available/default \
     && rm -rf /etc/nginx/sites-enabled/default
 
-# Creamos la carpeta de seguridad y fabricamos el certificado (.crt) y la llave (.key)
+# We created the security folder and generated the certificate (.crt) and the key (.key).
 RUN mkdir -p /etc/nginx/ssl && \
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/inception.key \
     -out /etc/nginx/ssl/inception.crt \
     -subj "/C=ES/ST=Andalucia/L=Malaga/O=42/OU=42Malaga/CN=patquesa.42.fr"
 
-# Copiamos TU archivo de configuración al sitio correcto dentro del contenedor
+# We copied YOUR configuration file to the correct location inside the container
 COPY ./conf/nginx.conf /etc/nginx/sites-available/default
 
-# Creamos un enlace simbólico para activar la configuración
+# We created a symbolic link to activate the configuration
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-# Obligamos a Nginx a ejecutarse en primer plano para que el contenedor no se apague
+# We force Nginx to run in the foreground so that the container doesn't shut down.
 CMD ["nginx", "-g", "daemon off;"]
