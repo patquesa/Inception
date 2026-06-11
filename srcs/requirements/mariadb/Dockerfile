@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-# Descarga e Instala mariadb
+# Download and install mariadb
 RUN apt update && apt install -y \
     mariadb-server \
     && rm -rf /var/lib/apt/lists/*
