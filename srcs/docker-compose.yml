@@ -34,9 +34,9 @@ services:
     build: ./requirements/nginx
     container_name: nginx
     ports:
-      - "443:443" # Abre el puerto seguro al mundo exterior
+      - "443:443"
     volumes:
-      - wordpress_data:/var/www/html # 🌟 ¡Crucial! Comparte la misma carpeta que WordPress para poder leer el index.php y las fotos
+      - wordpress_data:/var/www/html
     depends_on:
       - wordpress
     networks:

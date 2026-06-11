@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y \
 RUN rm -rf /etc/nginx/sites-available/default \
     && rm -rf /etc/nginx/sites-enabled/default
 
-# CREAMOS LAS LLAVES TLS (Lo que nos faltaba)
 # Creamos la carpeta de seguridad y fabricamos el certificado (.crt) y la llave (.key)
 RUN mkdir -p /etc/nginx/ssl && \
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \

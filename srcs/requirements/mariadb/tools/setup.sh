@@ -38,7 +38,6 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
 FLUSH PRIVILEGES;
 EOF
 
-#mariadb-admin --socket=/run/mysqld/mysqld.sock shutdown
 mariadb-admin --protocol=SOCKET --socket=/run/mysqld/mysqld.sock -u root -p"${MYSQL_ROOT_PASSWORD}" shutdown
 wait "$pid" 2>/dev/null
 
@@ -48,6 +47,4 @@ else
 fi
 
 #Arrancar MariaDB en foreground
-#exec mysqld --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0
-# Tu línea final en MariaDB setup.sh debe ser solo:
 exec mysqld --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0 --skip-name-resolve
