@@ -317,11 +317,17 @@ User
 ## Official Documentation
 
 * Docker Documentation
+  https://docs.docker.com/
 * Docker Compose Documentation
+  https://docs.docker.com/compose/
 * Nginx Documentation
+  https://nginx.org/en/docs/
 * PHP-FPM Documentation
+  https://www.php.net/manual/en/install.fpm.php
 * MariaDB Documentation
+  https://mariadb.com/kb/en/documentation/
 * WordPress Documentation
+  https://developer.wordpress.org/
 
 ## Learning Resources
 
