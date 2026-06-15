@@ -170,4 +170,4 @@ MariaDB
 
 AI tools were used as learning assistants to better understand Docker concepts, shell scripting and network configuration. They were also used to review documentation and verify compliance with the requirements of the 42 subject.
 
-All Dockerfiles, shell scripts and configuration files were manually written, tested and validated.
+All Dockerfiles, shell scripts and configuration files were manually written, tested and validated. AI was used exclusively as a support and learning tool and not as a replacement for implementation and testing.
