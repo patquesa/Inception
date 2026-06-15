@@ -141,7 +141,9 @@ WordPress
     ↓
 MariaDB
 ```
-## Resources Documentation
+## Resources 
+
+### Oficial Documentation
 
 * Docker Documentation
   https://docs.docker.com/
@@ -156,7 +158,7 @@ MariaDB
 * WordPress Documentation
   https://developer.wordpress.org/
 
-## Learning Resources
+### Learning Resources
 
 * HolaMundo – *Aprende Docker ahora! Curso completo gratis desde cero!*
   https://www.youtube.com/watch?v=4Dko5W96WHg
