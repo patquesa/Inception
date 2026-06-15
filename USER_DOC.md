@@ -40,7 +40,7 @@ docker compose -f srcs/docker-compose.yml up -d --build
 
 # Access the Website
 
-Open your browser and go to:
+Public Site: Open your browser and go to:
 
 ```text
 https://<DOMAIN_NAME>
@@ -51,10 +51,15 @@ Example:
 ```text
 https://patquesa.42.fr
 ```
+Admin Panel: Go to:
+
+```text
+https://<DOMAIN_NAME>/wp-admin
+```
 
 ---
 
-# Available Users
+# Available Users & Security
 
 ## Administrator
 
@@ -69,6 +74,12 @@ It has full privileges over the website.
 A second user account is also created automatically.
 
 This account has author privileges.
+
+---
+
+## Security
+
+For security, the administrator username does not include "admin". Credentials are managed via the .env file in the srcs/ directory and must be kept secure.
 
 ---
 
@@ -155,4 +166,9 @@ docker logs mariadb
 
 ```bash
 docker compose -f srcs/docker-compose.yml down
+```
+## Verify volumes
+
+```bash
+docker volume inspect srcs_mariadb_data
 ```
