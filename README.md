@@ -1,6 +1,6 @@
-# Inception
+*This project has been created as part of the 42 curriculum by patquesa.*
 
-*This project has been created as part of the 42 curriculum by patquesa*
+# Inception
 
 ## Description
 
@@ -13,6 +13,51 @@ The project is composed of three services:
 * **MariaDB**: relational database server.
 
 Each service runs in its own container and communicates through a private Docker network.
+
+## Project Description
+
+Docker was chosen to provide isolation between services and to simplify deployment and maintenance. Each service is containerized independently and managed using Docker Compose.
+
+The infrastructure is based on three main design choices:
+
+A dedicated container for each service.
+A private Docker bridge network to allow communication between containers.
+Docker volumes to provide data persistence.
+Docker secrets to protect sensitive information such as passwords and credentials.
+
+This architecture improves modularity, portability and maintainability while keeping the services isolated from each other
+
+---
+
+## Virtual Machines vs Docker
+
+Virtual machines emulate an entire operating system and require more resources.
+
+Docker containers share the host kernel, start faster and consume fewer resources, making them more suitable for lightweight service-oriented architectures.
+
+---
+
+## Secrets vs Environment Variables
+
+Environment variables are intended for general configuration values.
+
+Docker secrets are used to store sensitive information such as passwords and credentials. Secrets are mounted at runtime and are not embedded inside Docker images.
+
+---
+
+## Docker Network vs Host Network
+
+Bridge networks isolate containers and provide internal DNS resolution.
+
+Host networking shares the host network stack and reduces isolation. A bridge network was chosen to improve modularity and security.
+
+---
+
+## Docker Volumes vs Bind Mounts
+
+Docker volumes are managed by Docker and are designed for persistent application data.
+
+Bind mounts directly map host directories into containers. Volumes were chosen because they are easier to manage and provide better portability.
 
 ---
 
@@ -121,4 +166,6 @@ MariaDB
 
 ## AI Usage
 
-This project was developed with the assistance of AI tools. AI was used to better understand Docker network configurations, troubleshoot SSH connectivity issues within the virtual machine, and verify that the project structure and documentation met the requirements of the 42 curriculum. All configuration files and scripts were manually reviewed to ensure accuracy and compliance with the subject.
+AI tools were used as learning assistants to better understand Docker concepts, shell scripting and network configuration. They were also used to review documentation and verify compliance with the requirements of the 42 subject.
+
+All Dockerfiles, shell scripts and configuration files were manually written, tested and validated.
