@@ -12,7 +12,7 @@ The infrastructure consists of three services:
 
 ---
 
-# Requirements
+## Requirements
 
 The following tools must be installed:
 
@@ -22,7 +22,7 @@ The following tools must be installed:
 
 ---
 
-# Build and Start
+## Build and Start
 
 To build and start the containers:
 
@@ -38,9 +38,9 @@ docker compose -f srcs/docker-compose.yml up -d --build
 
 ---
 
-# Access the Website
+## Access the Website
 
-Public Site: Open your browser and go to:
+Open your browser and go to:
 
 ```text
 https://<DOMAIN_NAME>
@@ -51,7 +51,10 @@ Example:
 ```text
 https://patquesa.42.fr
 ```
-Admin Panel: Go to:
+
+## Access the Administration Panel
+
+Open your browser and go to
 
 ```text
 https://<DOMAIN_NAME>/wp-admin
@@ -59,7 +62,7 @@ https://<DOMAIN_NAME>/wp-admin
 
 ---
 
-# Available Users & Security
+## Available Users
 
 ## Administrator
 
@@ -77,15 +80,15 @@ This account has author privileges.
 
 ---
 
-## Security
+## Credentials Management
 
 For security, the administrator username does not include "admin". Credentials are managed via the .env file in the srcs/ directory and must be kept secure.
 
 ---
 
-# Useful Commands
+## Useful Commands
 
-## Start the project
+### Start the project
 
 ```bash
 make
@@ -93,7 +96,7 @@ make
 
 ---
 
-## Stop containers
+### Stop containers
 
 ```bash
 make down
@@ -101,7 +104,7 @@ make down
 
 ---
 
-## Restart containers
+### Restart containers
 
 ```bash
 make re
@@ -109,7 +112,7 @@ make re
 
 ---
 
-## Remove containers, images and volumes
+### Remove containers, images and volumes
 
 ```bash
 make fclean
@@ -117,7 +120,7 @@ make fclean
 
 ---
 
-# Persistent Data
+## Persistent Data
 
 The following data are preserved through Docker volumes:
 
@@ -128,7 +131,7 @@ Therefore, restarting the containers does not erase the website or database cont
 
 ---
 
-# HTTPS
+## HTTPS
 
 The website is available through HTTPS.
 
@@ -136,9 +139,9 @@ Nginx handles TLS encryption and listens on port 443.
 
 ---
 
-# Troubleshooting
+## Troubleshooting
 
-## Check running containers
+### Check running containers
 
 ```bash
 docker ps
@@ -146,7 +149,7 @@ docker ps
 
 ---
 
-## Display logs
+### Display logs
 
 ```bash
 docker logs <container_name>
@@ -162,12 +165,12 @@ docker logs mariadb
 
 ---
 
-## Stop all containers
+### Stop all containers
 
 ```bash
 docker compose -f srcs/docker-compose.yml down
 ```
-## Verify volumes
+### Verify volumes
 
 ```bash
 docker volume inspect srcs_mariadb_data
