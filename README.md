@@ -1,5 +1,7 @@
 # Inception
 
+*This project has been created as part of the 42 curriculum by patquesa*
+
 ## Description
 
 Inception is a system administration project from the 42 Common Core. The goal is to deploy a small infrastructure using Docker containers.
