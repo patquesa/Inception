@@ -1,6 +1,6 @@
 # Developer Documentation
 
-# Overview
+## Overview
 
 Inception is a containerized infrastructure composed of three services:
 
@@ -12,7 +12,7 @@ Each service runs inside its own container and communicates through a private Do
 
 ---
 
-# Architecture
+## Architecture
 
 ```text
 Client
@@ -32,7 +32,7 @@ MariaDB (mysqld)
 
 ---
 
-# Docker
+## Docker
 
 The project is orchestrated using Docker Compose.
 
@@ -56,7 +56,80 @@ Main process
 
 ---
 
-# Nginx
+## Container Management
+
+Display running containers:
+
+```bash
+docker ps
+```
+
+Display Docker Compose containers:
+
+```bash
+docker compose -f srcs/docker-compose.yml ps
+```
+
+Display service logs:
+
+```bash
+docker logs nginx
+docker logs wordpress
+docker logs mariadb
+```
+
+Stop the containers:
+
+```bash
+docker compose -f srcs/docker-compose.yml down
+```
+
+---
+
+## Volume Management
+
+List Docker volumes:
+
+```bash
+docker volume ls
+```
+
+Inspect a volume:
+
+```bash
+docker volume inspect <volume_name>
+```
+
+---
+
+## Data Persistence
+
+Project data is stored on the host machine and mounted inside the containers through Docker volumes.
+
+WordPress files are stored in:
+
+```text
+/home/patquesa/data/wordpress
+```
+
+MariaDB data is stored in:
+
+```text
+/home/patquesa/data/mysql
+```
+
+Inside the containers, these paths are mounted as:
+
+```text
+/var/www/html
+/var/lib/mysql
+```
+
+This ensures that rebuilding containers or restarting the virtual machine does not erase the website files or the database.
+
+---
+
+## Nginx
 
 Nginx is the web server.
 
@@ -77,7 +150,7 @@ Nginx acts as a reverse proxy between the client and PHP-FPM.
 
 ---
 
-# PHP-FPM
+## PHP-FPM
 
 PHP-FPM (PHP FastCGI Process Manager) is responsible for executing PHP code.
 
@@ -103,7 +176,7 @@ allowing communication through TCP.
 
 ---
 
-# WordPress
+## WordPress
 
 WordPress is a CMS written in PHP.
 
@@ -129,7 +202,7 @@ which contains:
 
 ---
 
-# MariaDB
+## MariaDB
 
 MariaDB is a relational database server.
 
@@ -161,7 +234,7 @@ which sends SQL commands to the server.
 
 ---
 
-# Setup Scripts
+## Setup Scripts
 
 Each service uses a setup.sh script.
 
@@ -195,7 +268,7 @@ The exec command replaces the shell process and makes the service the main proce
 
 ---
 
-# Networks
+## Networks
 
 Docker creates a private bridge network.
 
@@ -216,7 +289,7 @@ Docker automatically provides DNS resolution using service names.
 
 ---
 
-# Volumes
+## Volumes
 
 Volumes provide data persistence.
 
@@ -236,12 +309,12 @@ Therefore, restarting containers does not erase data.
 
 ---
 
-# Environment Variables
+## Environment Variables
 
 Configuration values are stored in:
 
 ```text
-.env
+srcs/.env
 ```
 
 Examples:
@@ -256,7 +329,7 @@ DOMAIN_NAME
 
 ---
 
-# Secrets
+## Secrets
 
 Sensitive information is stored using Docker secrets.
 
@@ -278,7 +351,7 @@ and read by the setup scripts.
 
 ---
 
-# Communication Flow
+## Communication Flow
 
 ```text
 User
@@ -312,9 +385,9 @@ User
 
 ---
 
-# References
+## References
 
-## Official Documentation
+### Official Documentation
 
 * Docker Documentation
   https://docs.docker.com/
@@ -329,7 +402,7 @@ User
 * WordPress Documentation
   https://developer.wordpress.org/
 
-## Learning Resources
+### Learning Resources
 
 * HolaMundo – *Aprende Docker ahora! Curso completo gratis desde cero!*
   https://www.youtube.com/watch?v=4Dko5W96WHg
