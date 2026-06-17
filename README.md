@@ -43,6 +43,8 @@ Environment variables are intended for general configuration values.
 
 Docker secrets are used to store sensitive information such as passwords and credentials. Secrets are mounted at runtime and are not embedded inside Docker images.
 
+Since this project handles sensitive information, the .env file and the secrets/ directory are included in the .gitignore and are not stored in the repository.
+
 ---
 
 ## Docker Network vs Host Network
