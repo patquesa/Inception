@@ -11,6 +11,7 @@ clean:
 	docker compose -f srcs/docker-compose.yml down -v
 
 fclean: clean
+	docker image prune -a -f
 	sudo rm -rf /home/patquesa/data/mariadb/*
 	sudo rm -rf /home/patquesa/data/wordpress/*
 
